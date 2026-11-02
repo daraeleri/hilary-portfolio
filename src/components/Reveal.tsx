@@ -26,7 +26,9 @@ export default function Reveal({
           observer.disconnect();
         }
       },
-      { threshold: 0.2 },
+      // A ratio threshold never fires on blocks taller than ~5 viewports,
+      // so trigger on the top edge passing 85% of the screen instead.
+      { rootMargin: "0px 0px -15% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();

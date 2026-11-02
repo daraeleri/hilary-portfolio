@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CountUp from "./CountUp";
 import Reveal from "./Reveal";
+import SectionRule from "./SectionRule";
 import styles from "./About.module.css";
 
 const roles = [
@@ -35,14 +36,7 @@ export default function About() {
   return (
     <Reveal className={styles.band}>
       <section id="about" data-nav-label="About" className={styles.about}>
-        <div className={styles.rule} aria-hidden>
-          <span className={styles.ruleIndex}>{"//02"}</span>
-          <svg viewBox="0 0 7 7" className={styles.rulePlus}>
-            <path d="M2.93 7V0h1.14v7H2.93ZM0 4.07V2.93h7v1.14H0Z" fill="currentColor" />
-          </svg>
-          <span className={styles.rulePath}>/ about</span>
-          <span className={styles.ruleLabel}>About Hilary</span>
-        </div>
+        <SectionRule index="02" path="about" label="About Hilary" />
 
         <h2 className={styles.name}>
           <span className={styles.mask}>

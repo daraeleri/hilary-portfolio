@@ -78,6 +78,31 @@
 
 html {
   scroll-behavior: smooth;
+  /* Scrollbar hidden; scrolling still works everywhere */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Lenis (see SmoothScroll.tsx) drives scrolling, so native smoothing must be off */
+html.lenis,
+html.lenis body {
+  height: auto;
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 body {

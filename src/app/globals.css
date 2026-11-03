@@ -27,6 +27,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-sora);
+  --font-hand: var(--font-hand-face);
 
   --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-draw: draw 2.2s cubic-bezier(0.65, 0, 0.35, 1) both;

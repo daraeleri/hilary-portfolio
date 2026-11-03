@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import {
   Anton,
-  Caveat,
   Geist,
   Geist_Mono,
   Mrs_Saint_Delafield,
@@ -39,13 +38,6 @@ const signature = Mrs_Saint_Delafield({
   weight: "400",
 });
 
-// Handwritten notes in the hero
-const hand = Caveat({
-  variable: "--font-hand-face",
-  subsets: ["latin"],
-  weight: ["600"],
-});
-
 export const metadata: Metadata = {
   title: "Tangunu Hilary — Network Security & Developer",
   description:
@@ -56,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${anton.variable} ${signature.variable} ${hand.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${anton.variable} ${signature.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll />

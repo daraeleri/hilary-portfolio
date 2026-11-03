@@ -11,7 +11,15 @@
   color: var(--paper);
 }
 
+/* Width is capped by max-w-7xl (set in About.tsx), matching the hero. This is
+   the container the cqw units below scale against. */
 .about {
+  container-type: inline-size;
+}
+
+/* cqw can't resolve against the container itself, so the composition lives
+   in a child of .about. */
+.stage {
   position: relative;
   height: 73.802cqw;
   margin-top: 6cqw;
@@ -344,7 +352,7 @@
  */
 
 @media (max-width: 1023px) {
-  .about {
+  .stage {
     display: flex;
     flex-direction: column;
     height: auto;

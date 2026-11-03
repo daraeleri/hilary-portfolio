@@ -68,9 +68,9 @@ export default function Hero() {
         className="absolute top-24 left-1/2 -z-10 h-72 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-blue/25 blur-3xl"
       />
 
-      <div className="mx-auto w-full max-w-7xl px-6 pt-32 sm:pt-36">
+      <div className="w-full px-6 pt-32 sm:px-[5.208vw] sm:pt-36">
         {/* Intro */}
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto text-center">
           <p className="inline-flex animate-rise items-center gap-2.5 rounded-full border border-line bg-paper/5 py-1.5 pr-4 pl-1.5 text-xs text-paper/80 backdrop-blur sm:text-sm">
             <span className="grid size-6 place-items-center rounded-full bg-blue/25 text-blue-soft">
               <ShieldIcon />
@@ -78,7 +78,7 @@ export default function Hero() {
             Network security &amp; full-stack developer
           </p>
 
-          <h1 className="mt-6 animate-rise font-display text-[2.6rem] leading-[1.02] font-extrabold tracking-tight text-balance [animation-delay:120ms] sm:text-6xl lg:text-7xl xl:text-[5.25rem]">
+          <h1 className="mt-6 animate-rise font-display text-[length:clamp(2.6rem,6.2vw,8rem)] leading-[1.02] font-extrabold tracking-tight text-balance [animation-delay:120ms]">
             Secure networks.{" "}
             <span className="relative inline-block text-blue-soft">
               Sharp apps.
@@ -102,7 +102,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-7 max-w-xl animate-rise text-base leading-relaxed text-paper/70 [animation-delay:240ms] sm:text-lg">
+          <p className="mx-auto mt-7 max-w-[clamp(22rem,44vw,56rem)] animate-rise text-[length:clamp(1rem,1.25vw,1.5rem)] leading-relaxed text-paper/70 [animation-delay:240ms]">
             Hi, I&apos;m{" "}
             <strong className="font-semibold text-paper">Tangunu Hilary</strong>
             . Network security &amp; ethical hacking by day, mobile &amp; web
@@ -139,14 +139,14 @@ export default function Hero() {
         </div>
 
         {/* Portrait stands directly on the marquee line, nothing else around it */}
-        <div className="mx-auto mt-12 w-[17rem] animate-rise [animation-delay:250ms] sm:mt-14 sm:w-[24rem] lg:w-[28rem]">
+        <div className="mx-auto mt-12 w-[clamp(17rem,32vw,44rem)] animate-rise [animation-delay:250ms] sm:mt-14">
           <Image
             src="/images/hilary.png"
             alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
             width={1213}
             height={1296}
             preload
-            sizes="(min-width: 1024px) 448px, (min-width: 640px) 384px, 272px"
+            sizes="(min-width: 640px) 32vw, 272px"
             className="block h-auto w-full"
           />
         </div>

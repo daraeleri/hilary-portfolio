@@ -35,104 +35,94 @@ function Bullet() {
 export default function About() {
   return (
     <Reveal className={styles.band}>
-      <section
-        id="about"
-        data-nav-label="About"
-        className={`mx-auto w-full max-w-7xl ${styles.about}`}
-      >
-        <div className={styles.stage}>
-          <SectionRule index="02" path="about" label="About Hilary" />
+      <section id="about" data-nav-label="About" className={styles.about}>
+        <SectionRule index="02" path="about" label="About Hilary" />
 
-          <h2 className={styles.name}>
-            <span className={styles.mask}>
-              <span>Tangunu</span>
-            </span>
-            <span className={styles.mask}>
-              <span>Hilary</span>
-            </span>
-          </h2>
-
-          <div className={styles.pipeline}>
-            <p>Secure networks and sharp apps, built and broken on purpose.</p>
-            <p>
-              Every system gets tested the way a real attacker would approach
-              it.
-            </p>
-          </div>
-
-          <span className={styles.signature} aria-hidden>
-            Hilary
+        <h2 className={styles.name}>
+          <span className={styles.mask}>
+            <span>Tangunu</span>
           </span>
+          <span className={styles.mask}>
+            <span>Hilary</span>
+          </span>
+        </h2>
 
-          <div className={styles.photo}>
-            <Image
-              src="/images/hilary.png"
-              alt="Black-and-white portrait of Tangunu Hilary"
-              fill
-              sizes="(max-width: 767px) 100vw, 50vw"
-            />
-          </div>
+        <div className={styles.pipeline}>
+          <p>Secure networks and sharp apps, built and broken on purpose.</p>
+          <p>Every system gets tested the way a real attacker would approach it.</p>
+        </div>
 
-          <div className={styles.roles}>
-            <span aria-hidden>(</span>
-            <p>
-              {roles.map((role) => (
-                <span key={role}>{role}</span>
-              ))}
-            </p>
-            <span aria-hidden>)</span>
-          </div>
+        <span className={styles.signature} aria-hidden>
+          Hilary
+        </span>
 
-          <div className={styles.intro}>
-            <p>I work where networks, security and software meet.</p>
-            <p>
-              From hardening networks to pentesting and shipping mobile and web
-              apps, I own systems from the cables to the code.
-            </p>
-          </div>
+        <div className={styles.photo}>
+          <Image
+            src="/images/hilary.png"
+            alt="Black-and-white portrait of Tangunu Hilary"
+            fill
+            sizes="(max-width: 767px) 100vw, 50vw"
+          />
+        </div>
 
-          <dl className={styles.stats}>
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className={stat.href ? styles.linkedStat : undefined}
-              >
-                <dt>
-                  {stat.href ? (
-                    <a href={stat.href} className={styles.link}>
-                      {stat.label}
-                    </a>
-                  ) : (
-                    stat.label
-                  )}
-                </dt>
-                <dd>
-                  <CountUp value={stat.value} />
-                  <span className={styles.plus}>+</span>
-                </dd>
-              </div>
+        <div className={styles.roles}>
+          <span aria-hidden>(</span>
+          <p>
+            {roles.map((role) => (
+              <span key={role}>{role}</span>
             ))}
-          </dl>
+          </p>
+          <span aria-hidden>)</span>
+        </div>
 
-          <div className={styles.notes}>
-            <div>
-              <Bullet />
-              <p>
-                <strong>
-                  <a href="#skills" className={styles.link}>
-                    / Security first
+        <div className={styles.intro}>
+          <p>
+            I work where networks, security and software meet.
+          </p>
+          <p>
+            From hardening networks to pentesting and shipping mobile and web
+            apps, I own systems from the cables to the code.
+          </p>
+        </div>
+
+        <dl className={styles.stats}>
+          {stats.map((stat) => (
+            <div key={stat.label} className={stat.href ? styles.linkedStat : undefined}>
+              <dt>
+                {stat.href ? (
+                  <a href={stat.href} className={styles.link}>
+                    {stat.label}
                   </a>
-                </strong>{" "}
-                — every app I build is tested like an attacker would.
-              </p>
+                ) : (
+                  stat.label
+                )}
+              </dt>
+              <dd>
+                <CountUp value={stat.value} />
+                <span className={styles.plus}>+</span>
+              </dd>
             </div>
-            <div>
-              <Bullet />
-              <p>
-                <strong>/ Always learning</strong> — new labs, tools and
-                projects every week.
-              </p>
-            </div>
+          ))}
+        </dl>
+
+        <div className={styles.notes}>
+          <div>
+            <Bullet />
+            <p>
+              <strong>
+                <a href="#skills" className={styles.link}>
+                  / Security first
+                </a>
+              </strong>{" "}
+              — every app I build is tested like an attacker would.
+            </p>
+          </div>
+          <div>
+            <Bullet />
+            <p>
+              <strong>/ Always learning</strong> — new labs, tools and
+              projects every week.
+            </p>
           </div>
         </div>
       </section>

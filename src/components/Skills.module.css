@@ -128,25 +128,50 @@
 }
 
 /* ---- Files: scroll-triggered stack of folders ---- */
+/*
+ * Every file pins at the same sticky top. Its tab sits in the strip above the
+ * sheet, so the tabs of earlier files stay visible in a staggered row while
+ * the newest sheet covers everything below them — the folder stack in the
+ * reference design. The whole stack lives in a max-w-5xl column.
+ */
 
 .files {
-  --tab-h: 2.6rem;
-  --tab-w: max(11rem, 16cqw);
-  --step: max(3.1rem, 3.3cqw);
-  margin: 4cqw 0 0;
-  padding: 0 5.208cqw;
+  --tab-h: clamp(2.8rem, 3.1cqw, 3.25rem);
+  --tab-step: 20%;
+  --tab-gap: 6px;
+  --tab-slant: 0.85rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 64rem;
+  margin: clamp(2.5rem, 4cqw, 4rem) auto 0;
+  padding: 0 clamp(1rem, 2.4vw, 2rem);
   list-style: none;
 }
 
-/* Every file pins a little lower than the one before, so earlier tabs stay visible */
 .file {
   position: sticky;
-  top: calc(1rem + var(--i) * var(--step));
-  margin-bottom: 3cqw;
+  top: 1.5rem;
+  margin-bottom: clamp(1.5rem, 2.6cqw, 2.5rem);
 }
 
 .file:last-child {
   margin-bottom: 0;
+}
+
+/* The last tab has nothing to its right, so it runs to the sheet's edge instead
+ * of leaving the tab gap: otherwise the sheet's rounded top-right corner shows
+ * through that sliver as a stray ear under the tab. */
+@media (min-width: 1024px) {
+  .file:last-child .tab {
+    right: 0;
+    width: auto;
+  }
+
+  /* Square the corner under that flush tab, so the tab's slanted tip meets a
+   * straight shoulder instead of overhanging the sheet's curled corner. */
+  .file:last-child .sheet {
+    border-top-right-radius: 0;
+  }
 }
 
 .folder {
@@ -154,107 +179,116 @@
   padding-top: var(--tab-h);
 }
 
+/* Rounded top-left, cut on a slant at the top-right, like a paper tab */
 .tab {
   position: absolute;
   top: 0;
-  left: calc(var(--i) * var(--tab-w));
+  left: calc(var(--i) * var(--tab-step));
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.4rem;
   box-sizing: border-box;
-  width: var(--tab-w);
+  width: calc(var(--tab-step) - var(--tab-gap));
   height: var(--tab-h);
-  padding: 0 1rem;
-  border-radius: 16px 16px 0 0;
+  padding: 0 0.95rem 0 0.95rem;
+  border-radius: 0.7rem 0 0 0;
   background: var(--file);
   color: var(--on);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: 0.95rem;
+  font-size: clamp(0.7rem, 0.82vw, 0.74rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   white-space: nowrap;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - var(--tab-slant)) 0, 100% 100%, 0 100%);
+}
+
+.folderIcon {
+  flex: none;
+  width: 0.9em;
+  height: 0.72em;
 }
 
 .tab b {
   font-weight: 400;
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
-.tab > span {
+.tabSep {
+  opacity: 0.45;
+}
+
+.tabName {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Concave corners where the tab melts into the sheet */
-.tab::before,
-.tab::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-}
-
-.tab::before {
-  left: -16px;
-  background: radial-gradient(circle at 0 0, transparent 16px, var(--file) 16.5px);
-}
-
-.tab::after {
-  right: -16px;
-  background: radial-gradient(circle at 100% 0, transparent 16px, var(--file) 16.5px);
-}
-
-.file:first-child .tab::before {
-  display: none;
-}
-
 .sheet {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 3cqw;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(1.5rem, 3.4cqw, 3rem);
   align-items: center;
-  padding: max(24px, 2.6cqw);
-  border-radius: 26px;
+  box-sizing: border-box;
+  min-height: 33rem;
+  padding: clamp(1.5rem, 2.9cqw, 2.9rem);
+  border-radius: 0 1.6rem 1.6rem 1.6rem;
   background: var(--file);
   color: var(--on);
-  box-shadow: 0 -16px 36px -22px rgba(0, 0, 0, 0.85);
-}
-
-.file:first-child .sheet {
-  border-top-left-radius: 0;
+  box-shadow: 0 -20px 44px -26px rgba(0, 0, 0, 0.9);
 }
 
 .copy {
   display: flex;
   flex-direction: column;
   align-self: stretch;
+  min-width: 0;
 }
 
 .meta {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  opacity: 0.6;
+  opacity: 0.62;
+}
+
+.metaName {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  flex: none;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .cardTitle {
-  margin-top: 1.1rem;
+  margin-top: clamp(0.9rem, 1.5cqw, 1.3rem);
+  max-width: 14ch;
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: max(34px, 3.6cqw);
+  font-size: clamp(2.4rem, 4cqw, 3.5rem);
   font-weight: 400;
-  line-height: 0.95;
+  line-height: 0.92;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
 }
 
 .body {
-  margin-top: 1.1rem;
-  max-width: 34rem;
-  font-size: max(14px, 1.1cqw);
+  margin-top: 1rem;
+  max-width: 29rem;
+  font-size: max(14px, 1.02cqw);
   line-height: 1.5;
   opacity: 0.85;
 }
@@ -265,50 +299,81 @@
 
 .cardFoot {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  gap: 1.6rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1.4rem;
   margin-top: auto;
-  padding-top: 1.6rem;
+  padding-top: clamp(1.2rem, 2cqw, 1.8rem);
 }
 
 .footLabel {
-  font-family: var(--font-anton), Impact, sans-serif;
-  font-size: max(17px, 1.3cqw);
-  line-height: 1;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  border-bottom: 1.5px solid color-mix(in srgb, var(--on) 40%, transparent);
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .deliver {
-  margin-top: 0.6rem;
-  font-size: max(13px, 0.94cqw);
+  margin-top: 0.65rem;
+  max-width: 26rem;
+  font-size: max(13px, 0.95cqw);
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .tools {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-top: 0.6rem;
+  margin-top: 0.65rem;
   list-style: none;
 }
 
 .tools li {
-  padding: 0.25rem 0.6rem;
+  padding: 0.28rem 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--on) 26%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--on) 14%, transparent);
   font-size: 12px;
   font-weight: 500;
 }
 
-/* The skill's illustration, like a screenshot tucked into the file */
+/* The skill's illustration, taped into a white frame like a pasted screenshot */
 .shot {
-  transform: rotate(1.5deg);
+  justify-self: end;
+  width: 100%;
+  max-width: 26rem;
 }
 
-.file:nth-child(even) .shot {
-  transform: rotate(-1.5deg);
+.frame {
+  position: relative;
+  padding: clamp(0.4rem, 0.7cqw, 0.65rem);
+  background: var(--paper);
+  box-shadow: 0 26px 48px -26px rgba(0, 0, 0, 0.55);
+}
+
+.frame::before,
+.frame::after {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  width: 24%;
+  height: 1.35rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.frame::before {
+  left: 1%;
+  transform: rotate(-4deg);
+}
+
+.frame::after {
+  right: 1%;
+  transform: rotate(4deg);
 }
 
 .screen {
@@ -316,13 +381,11 @@
   display: grid;
   place-items: center;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 3;
   overflow: clip;
-  border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: 2px;
   background: #050505;
   color: var(--paper);
-  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, 0.7);
 }
 
 .screen::after {
@@ -709,47 +772,125 @@
   }
 
   .files {
-    --tab-w: auto;
-    --step: 2.9rem;
+    --tab-h: 3.2rem;
+    --tab-slant: 1.1rem;
     margin-top: 32px;
     padding-inline: 16px;
   }
 
+  /* No pinning on touch screens, so tall cards stay fully readable */
   .file {
+    position: static;
     margin-bottom: 20px;
   }
 
-  /* No staggering: every tab sits at the left edge */
   .tab {
     left: 0;
     width: auto;
     min-width: 11rem;
-    max-width: 100%;
+    max-width: calc(100% - 8px);
+    gap: 0.65rem;
+    padding: 0 1.4rem 0 1.35rem;
+    border-radius: 0.85rem 0 0 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
   }
 
-  .tab::before {
-    display: none;
+  .folderIcon {
+    width: 1em;
+    height: 0.8em;
   }
 
-  .file .sheet {
-    border-top-left-radius: 0;
+  .sheet {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
     gap: 24px;
     padding: 24px;
+  }
+
+  .shot {
+    justify-self: stretch;
+    max-width: 100%;
+  }
+}
+
+/* ---- Tablets: the reference folder card — oversized tab, two columns ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .files {
+    --tab-h: 3.5rem;
+    --tab-slant: 1.5rem;
+  }
+
+  .tab {
+    min-width: 14rem;
+    padding: 0 1.7rem 0 1.5rem;
+    border-radius: 0.9rem 0 0 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.16em;
+  }
+
+  .folderIcon {
+    width: 1.05em;
+    height: 0.84em;
+  }
+
+  .sheet {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3.5vw, 2.5rem);
+    padding: clamp(24px, 4vw, 40px);
+    border-radius: 0 2rem 2rem 2rem;
+    box-shadow: 0 -24px 50px -30px rgba(0, 0, 0, 0.85);
+  }
+
+  .meta {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+  }
+
+  .cardTitle {
+    max-width: none;
+    font-size: clamp(2.5rem, 6.4vw, 3.6rem);
+    line-height: 0.94;
+  }
+
+  .body {
+    margin-top: 1.1rem;
+    max-width: 34rem;
+    font-size: max(15px, 1.7vw);
+  }
+
+  /* Tags stacked down the left, like the stats in the reference card */
+  .cardFoot {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.15rem;
+    padding-top: 1.5rem;
+  }
+
+  .deliver {
+    display: inline-block;
+    margin-top: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px rgba(5, 5, 5, 0.12);
+    font-family: var(--font-mono), monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .shot {
+    justify-self: end;
+    max-width: 26rem;
   }
 }
 
 @media (max-width: 767px) {
-  .sheet {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Keeps each pinned file shorter than a phone screen */
-  .shot {
-    display: none;
-  }
-
   .cardTitle {
-    font-size: 34px;
+    max-width: none;
+    font-size: clamp(34px, 10cqw, 46px);
   }
 
   .body {
@@ -759,6 +900,11 @@
   .cardFoot {
     grid-template-columns: 1fr;
     gap: 1.1rem;
+  }
+
+  /* Keeps each card short enough to read in one go */
+  .shot {
+    display: none;
   }
 }
 

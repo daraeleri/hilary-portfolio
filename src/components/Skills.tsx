@@ -93,6 +93,17 @@ function Spark() {
   );
 }
 
+function FolderIcon() {
+  return (
+    <svg viewBox="0 0 20 16" className={styles.folderIcon} aria-hidden>
+      <path
+        d="M0 3.2A3.2 3.2 0 0 1 3.2 0h3.1c.9 0 1.7.4 2.3 1l1.1 1.4h7.1A3.2 3.2 0 0 1 20 5.6v7.2a3.2 3.2 0 0 1-3.2 3.2H3.2A3.2 3.2 0 0 1 0 12.8V3.2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 function MarqueeUnit({ hidden }: { hidden?: boolean }) {
   return (
     <div className={styles.unit} aria-hidden={hidden}>
@@ -111,9 +122,10 @@ function MarqueeUnit({ hidden }: { hidden?: boolean }) {
 }
 
 /**
- * Skills as a stack of folders: each file pins near the top as you scroll and
- * the next one slides over it, leaving the tabs of earlier files showing.
- * Pure CSS (position: sticky), so it needs no JavaScript.
+ * Skills as a stack of folders after the reference folder-card design: every
+ * file pins at the same spot, its tab sitting in the strip above the sheet, so
+ * the earlier tabs stay visible in a staggered row while the newest sheet
+ * covers everything below them. Pure CSS (position: sticky), no JavaScript.
  */
 export default function Skills() {
   return (
@@ -168,13 +180,18 @@ export default function Skills() {
             >
               <div className={styles.folder}>
                 <span aria-hidden className={styles.tab}>
+                  <FolderIcon />
                   <b>{pad(i + 1)}</b>
-                  <span>{skill.name}</span>
+                  <span className={styles.tabSep}>·</span>
+                  <span className={styles.tabName}>{skill.name}</span>
                 </span>
                 <article className={styles.sheet}>
                   <div className={styles.copy}>
                     <p aria-hidden className={styles.meta}>
-                      <span>skill_{pad(i + 1)}.file</span>
+                      <span className={styles.metaName}>
+                        <i className={styles.dot} />
+                        {skill.name}
+                      </span>
                       <span>
                         {pad(i + 1)} / {pad(skills.length)}
                       </span>
@@ -183,11 +200,11 @@ export default function Skills() {
                     <p className={styles.body}>{rich(skill.body)}</p>
                     <div className={styles.cardFoot}>
                       <div>
-                        <p className={styles.footLabel}>What you get:</p>
+                        <p className={styles.footLabel}>What you get</p>
                         <p className={styles.deliver}>{skill.deliver}</p>
                       </div>
                       <div>
-                        <p className={styles.footLabel}>Tools:</p>
+                        <p className={styles.footLabel}>Tools</p>
                         <ul className={styles.tools}>
                           {skill.tools.map((tool) => (
                             <li key={tool}>{tool}</li>
@@ -197,7 +214,9 @@ export default function Skills() {
                     </div>
                   </div>
                   <div aria-hidden className={styles.shot}>
-                    <div className={styles.screen}>{skill.visual}</div>
+                    <div className={styles.frame}>
+                      <div className={styles.screen}>{skill.visual}</div>
+                    </div>
                   </div>
                 </article>
               </div>

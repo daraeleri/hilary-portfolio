@@ -45,60 +45,11 @@ function ShieldIcon() {
   );
 }
 
-/** Handwritten note with a drawn arrow curling towards the portrait. */
-function Note({
-  text,
-  arrow,
-  className,
-}: {
-  text: string;
-  arrow: "left" | "right";
-  className?: string;
-}) {
-  const left = arrow === "left";
-  return (
-    <div aria-hidden className={className}>
-      <p className="animate-rise font-hand text-2xl leading-none font-semibold whitespace-nowrap text-paper/80 [animation-delay:900ms] lg:text-[1.7rem]">
-        {text}
-      </p>
-      <svg
-        viewBox="0 0 90 60"
-        className={
-          left ? "mt-1 ml-auto h-14 w-20" : "mt-1 h-14 w-20 -scale-x-100"
-        }
-      >
-        <path
-          d="M8 6 C 30 4 58 14 62 34 C 64 44 56 50 48 44 C 40 38 52 26 70 34 C 78 38 82 46 84 54"
-          fill="none"
-          stroke="var(--paper)"
-          strokeOpacity="0.55"
-          strokeWidth="2"
-          strokeLinecap="round"
-          pathLength={1}
-          strokeDasharray="1"
-          className="animate-draw [animation-delay:1100ms]"
-        />
-        <path
-          d="M76 50 L84 55 L86 46"
-          fill="none"
-          stroke="var(--paper)"
-          strokeOpacity="0.55"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="animate-rise [animation-delay:1900ms]"
-        />
-      </svg>
-    </div>
-  );
-}
-
 /**
  * Hero after logomint's: a centred pill, big heading, subtitle, two buttons and
- * a proof line, above a rounded stage the portrait rises out of, with a quiet
- * "what I work with" strip underneath. Creative layer on top: handwritten
- * notes with drawn arrows, a hand-drawn underline, and glass chips on the stage.
- * CSS-only motion, so the portrait (the LCP image) is never held back by JS.
+ * a proof line, then the portrait standing directly on the "what I work with"
+ * marquee line. CSS-only motion, so the portrait (the LCP image) is never held
+ * back by JS.
  */
 export default function Hero() {
   return (
@@ -187,75 +138,22 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Stage: the portrait rises out of a rounded blue card */}
-        <div className="relative mx-auto mt-28 h-[12rem] max-w-5xl animate-rise [animation-delay:250ms] sm:mt-32 sm:h-[17rem] lg:mt-36 lg:h-[20rem]">
-          {/* Background layer, clipped on its own so the portrait can rise out of the top */}
-          <div
-            aria-hidden
-            className="absolute inset-0 overflow-hidden rounded-[2rem] bg-blue sm:rounded-[2.5rem]"
-          >
-            <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]" />
-            <div className="absolute top-1/2 left-1/2 aspect-square w-[70%] -translate-x-1/2 -translate-y-[40%] rounded-full border border-paper/15" />
-            <div className="absolute top-1/2 left-1/2 aspect-square w-[105%] -translate-x-1/2 -translate-y-[38%] rounded-full border border-paper/10" />
-            <div className="absolute -bottom-24 left-1/2 size-96 -translate-x-1/2 rounded-full bg-paper/20 blur-3xl" />
-          </div>
-
-          {/* Portrait */}
-          <div className="absolute bottom-0 left-1/2 z-10 w-[14rem] -translate-x-1/2 sm:w-[20rem] lg:w-[25rem]">
-            <Image
-              src="/images/hilary.png"
-              alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
-              width={1213}
-              height={1296}
-              preload
-              sizes="(min-width: 1024px) 400px, (min-width: 640px) 320px, 224px"
-              className="block h-auto w-full animate-rise drop-shadow-[0_24px_40px_rgba(0,0,0,0.35)] [animation-delay:350ms]"
-            />
-          </div>
-
-          {/* Handwritten notes (desktop) */}
-          <Note
-            text="I break things (legally)"
-            className="absolute -top-20 right-[calc(50%+11rem)] hidden text-right md:block lg:right-[calc(50%+13.5rem)]"
-            arrow="left"
+        {/* Portrait stands directly on the marquee line, nothing else around it */}
+        <div className="mx-auto mt-12 w-[17rem] animate-rise [animation-delay:250ms] sm:mt-14 sm:w-[24rem] lg:w-[28rem]">
+          <Image
+            src="/images/hilary.png"
+            alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
+            width={1213}
+            height={1296}
+            preload
+            sizes="(min-width: 1024px) 448px, (min-width: 640px) 384px, 272px"
+            className="block h-auto w-full"
           />
-          <Note
-            text="then build them back stronger"
-            className="absolute -top-14 left-[calc(50%+12rem)] hidden md:block lg:left-[calc(50%+14.5rem)]"
-            arrow="right"
-          />
-
-          {/* Glass chips on the stage */}
-          <div className="absolute bottom-5 left-5 z-20 hidden animate-rise rounded-xl bg-ink/50 px-3.5 py-2.5 font-mono text-[11px] leading-relaxed text-paper/80 ring-1 ring-paper/20 backdrop-blur-md [animation-delay:850ms] sm:block lg:bottom-8 lg:left-8">
-            <span className="text-blue-soft">$</span> whoami
-            <br />
-            <span className="text-paper">hilary</span>
-            <span className="ml-0.5 inline-block h-3 w-1.5 translate-y-0.5 animate-pulse bg-paper" />
-          </div>
-
-          <div className="absolute top-5 right-5 z-20 hidden animate-rise [animation-delay:700ms] sm:block lg:top-8 lg:right-8">
-            <div className="flex animate-float items-center gap-2 rounded-full bg-paper/12 py-2 pr-4 pl-2.5 text-xs font-medium text-paper ring-1 ring-paper/25 backdrop-blur-md">
-              <span className="grid size-7 place-items-center rounded-full bg-paper/15 text-paper">
-                <ShieldIcon />
-              </span>
-              Network secured
-            </div>
-          </div>
-
-          <dl className="absolute right-5 bottom-5 z-20 hidden animate-rise rounded-2xl bg-paper/12 px-4 py-3 text-paper ring-1 ring-paper/25 backdrop-blur-md [animation-delay:950ms] sm:block lg:right-8 lg:bottom-8">
-            <dt className="sr-only">Core disciplines</dt>
-            <dd className="font-display text-3xl leading-none font-bold">
-              {skills.length}
-            </dd>
-            <dd aria-hidden className="mt-1 text-xs text-paper/80">
-              Core disciplines
-            </dd>
-          </dl>
         </div>
       </div>
 
-      {/* Quiet strip after logomint's client logos: what I work with */}
-      <div className="mt-16 border-y border-line py-6 sm:mt-20">
+      {/* Quiet strip after logomint's client logos; its top line is the portrait's floor */}
+      <div className="border-y border-line py-6">
         <p className="text-center font-mono text-[11px] tracking-[0.2em] text-paper/40 uppercase">
           What I work with
         </p>

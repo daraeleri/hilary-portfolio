@@ -8,6 +8,12 @@ const skills = [
   "Web Development",
 ];
 
+// Short proof points, reused from the About copy.
+const proof = ["Security-first builds", "Tested like an attacker would", "Cables to code"];
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-soft";
+
 function ArrowIcon() {
   return (
     <svg viewBox="0 0 16 16" className="size-4" aria-hidden>
@@ -85,13 +91,20 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl flex-1 items-center gap-6 px-6 pt-28 lg:grid-cols-[1.15fr_1fr] lg:pt-20">
         <div className="relative z-10 text-center lg:text-left">
-          {/* Logomint-style badge */}
-          <p className="inline-flex animate-rise items-center gap-2.5 rounded-full border border-line bg-paper/5 py-1.5 pr-4 pl-1.5 text-xs text-paper/80 backdrop-blur sm:text-sm">
-            <span className="grid size-6 place-items-center rounded-full bg-blue font-display text-sm font-bold text-paper">
-              *
+          {/* Logomint-style trust pill, here as an availability status */}
+          <a
+            href="#contact"
+            className={`group inline-flex animate-rise items-center gap-2.5 rounded-full border border-line bg-paper/5 py-2 pr-3.5 pl-3.5 text-xs text-paper/80 backdrop-blur transition-colors hover:border-blue-soft/60 hover:text-paper sm:text-sm ${focusRing}`}
+          >
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-soft opacity-70" />
+              <span className="relative inline-flex size-2 rounded-full bg-blue-soft" />
             </span>
-            Hi, I&apos;m <strong className="font-semibold text-paper">Tangunu Hilary</strong>
-          </p>
+            Open to internships, freelance &amp; collaborations
+            <span className="text-paper/50 transition-transform group-hover:translate-x-0.5 group-hover:text-paper">
+              <ArrowIcon />
+            </span>
+          </a>
           <h1 className="mt-6 animate-rise font-display text-5xl leading-[0.95] font-extrabold tracking-tight [animation-delay:120ms] sm:text-7xl xl:text-8xl">
             Secure networks.
             <br />
@@ -99,13 +112,14 @@ export default function Hero() {
             <span className="text-blue">*</span>
           </h1>
           <p className="mx-auto mt-6 max-w-md animate-rise text-base leading-relaxed text-paper/80 [animation-delay:240ms] sm:text-lg lg:mx-0">
-            <span className="text-blue">*</span>Network security &amp; ethical
-            hacking by day, mobile &amp; web development by night.
+            Hi, I&apos;m <strong className="font-semibold text-paper">Tangunu Hilary</strong>.
+            Network security &amp; ethical hacking by day, mobile &amp; web
+            development by night.
           </p>
           <div className="mt-8 flex animate-rise flex-wrap items-center justify-center gap-3 [animation-delay:360ms] lg:justify-start">
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full bg-blue py-3 pr-5 pl-6 text-sm font-semibold text-paper shadow-[0_10px_30px_-10px_var(--blue)] transition-colors hover:bg-blue-soft hover:text-ink"
+              className={`group inline-flex min-h-11 items-center gap-2 rounded-full bg-blue py-3 pr-5 pl-6 text-sm font-semibold text-paper shadow-[0_10px_30px_-10px_var(--blue)] transition-colors hover:bg-blue-soft hover:text-ink ${focusRing}`}
             >
               View my work
               <span className="transition-transform group-hover:translate-x-0.5">
@@ -114,21 +128,22 @@ export default function Hero() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-full bg-paper/10 py-3 pr-5 pl-6 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink"
+              className={`inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-paper/10 py-3 pr-5 pl-6 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink ${focusRing}`}
             >
               Get in touch
               <MailIcon />
             </a>
           </div>
-          <p className="mt-6 animate-rise text-xs text-paper/50 [animation-delay:480ms] sm:text-sm">
-            Internships · Freelance · Collaborations ·{" "}
-            <a
-              href="#contact"
-              className="text-paper/80 underline decoration-paper/30 underline-offset-4 hover:text-paper hover:decoration-blue"
-            >
-              Let&apos;s talk
-            </a>
-          </p>
+
+          {/* Beetogreen-style proof row under the CTAs */}
+          <ul className="mt-10 flex animate-rise flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-line pt-6 text-xs text-paper/60 [animation-delay:480ms] sm:text-sm lg:justify-start">
+            {proof.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span aria-hidden className="size-1.5 rounded-full bg-blue" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Portrait rests its arms on the skills band below */}
@@ -137,15 +152,27 @@ export default function Hero() {
             aria-hidden
             className="absolute inset-x-[10%] top-[15%] bottom-0 -z-10 rounded-full bg-blue/40 blur-3xl"
           />
-          <Image
-            src="/images/hilary.png"
-            alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
-            width={1213}
-            height={1296}
-            preload
-            sizes="(min-width: 1024px) 40vw, (min-width: 640px) 28rem, 24rem"
-            className="relative block h-auto w-full animate-rise [animation-delay:200ms]"
-          />
+
+          {/* Rounded card frame with radar rings behind the portrait */}
+          <div className="relative overflow-hidden rounded-t-[2.5rem] border border-b-0 border-line bg-linear-to-b from-blue/25 via-blue-deep/40 to-transparent pt-10">
+            <div
+              aria-hidden
+              className="absolute top-[4%] left-1/2 aspect-square w-[92%] -translate-x-1/2 rounded-full border border-paper/10"
+            />
+            <div
+              aria-hidden
+              className="absolute top-[14%] left-1/2 aspect-square w-[68%] -translate-x-1/2 rounded-full border border-paper/10"
+            />
+            <Image
+              src="/images/hilary.png"
+              alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
+              width={1213}
+              height={1296}
+              preload
+              sizes="(min-width: 1024px) 40vw, (min-width: 640px) 28rem, 24rem"
+              className="relative block h-auto w-full animate-rise [animation-delay:200ms]"
+            />
+          </div>
 
           {/* Floating chips, after logomint's overlay pills */}
           <div className="absolute top-[48%] right-0 animate-rise lg:top-[18%] [animation-delay:700ms] sm:-right-4">

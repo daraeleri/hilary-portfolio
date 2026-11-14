@@ -140,7 +140,7 @@ export default function Hero() {
 
         {/* Portrait stands directly on the marquee line, nothing else around it */}
         <div className="mx-auto mt-12 w-[clamp(17rem,32vw,44rem)] animate-rise [animation-delay:250ms] sm:mt-14">
-          <Image
+          {/* <Image
             src="/images/hilary.png"
             alt="Tangunu Hilary smiling, wearing a flat cap and a cream sweater"
             width={1213}
@@ -148,7 +148,7 @@ export default function Hero() {
             preload
             sizes="(min-width: 640px) 32vw, 272px"
             className="block h-auto w-full"
-          />
+          /> */}
         </div>
       </div>
 

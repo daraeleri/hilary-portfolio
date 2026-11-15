@@ -1,0 +1,354 @@
+/*
+ * Projects section: an index list of selected work. Numbered rows with big
+ * display titles; on hover a blue fill sweeps up behind the row and the title
+ * slides right. Fluid and full width like Skills (cqw units against the band).
+ */
+
+.band {
+  container-type: inline-size;
+  overflow: clip;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8cqw 0 7cqw;
+}
+
+/* ---- Heading ---- */
+
+.head {
+  margin: 5cqw 5.208cqw 0;
+}
+
+.title {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: 6.6cqw;
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.title > span {
+  display: block;
+}
+
+.title .accent {
+  margin-left: 22cqw;
+  color: var(--blue);
+}
+
+.lead {
+  max-width: 34rem;
+  margin: 1.6cqw 0 0 22cqw;
+  font-size: max(15px, 1.15cqw);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.lead strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+/* ---- Rows ---- */
+
+.list {
+  margin: 4cqw 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns:
+    max(3rem, 4cqw) minmax(0, 1.7fr) minmax(0, 0.8fr) minmax(0, 1fr)
+    max(2.75rem, 3.4cqw);
+  gap: 2cqw;
+  align-items: center;
+  padding: 2.2cqw 5.208cqw;
+  border-bottom: 1px solid var(--line);
+}
+
+/* The blue fill that sweeps up on hover */
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.no {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+.name {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: max(28px, 3.4cqw);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.blurb {
+  margin-top: 0.6rem;
+  font-size: max(14px, 1cqw);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+.kind {
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tools li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: border-color 0.3s ease;
+}
+
+.go {
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  width: max(2.75rem, 3.4cqw);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--paper);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Rows without a link get an empty ring so the grid stays aligned */
+.go[data-idle] {
+  border-color: transparent;
+}
+
+.go svg {
+  width: 40%;
+  height: 40%;
+}
+
+/* The whole row is the link target */
+a.go::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+a.go:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: -4px;
+}
+
+@media (hover: hover) {
+  .row:hover::before,
+  .row:focus-within::before {
+    transform: scaleY(1);
+  }
+
+  .row:hover .no,
+  .row:hover .blurb {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .row:hover .name {
+    transform: translateX(1.4cqw);
+  }
+
+  .row:hover .tools li {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .row:hover a.go {
+    background: var(--paper);
+    color: var(--ink);
+    transform: rotate(-45deg);
+  }
+}
+
+/* ---- Closing call to action ---- */
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  margin: 5cqw 5.208cqw 0;
+}
+
+.cta p {
+  max-width: 22ch;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: max(26px, 3cqw);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Same primary button as the hero */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 10px 30px -10px var(--blue);
+  color: var(--paper);
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn:hover {
+  background: var(--blue-soft);
+  color: var(--ink);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 2px;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.btn:hover svg {
+  transform: translateX(2px);
+}
+
+/* ---- Entrance ---- */
+
+.head,
+.list {
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.list {
+  transition-delay: 0.15s;
+}
+
+.band[data-inview="false"] .head,
+.band[data-inview="false"] .list {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head,
+  .list,
+  .row::before,
+  .name,
+  .go {
+    transition: none;
+  }
+}
+
+/* ---- Tablets and phones: centred heading, stacked rows ---- */
+
+@media (max-width: 1023px) {
+  .band {
+    padding: 80px 0 64px;
+  }
+
+  .head {
+    margin: 48px 24px 0;
+    text-align: center;
+  }
+
+  .title {
+    font-size: clamp(44px, 11cqw, 88px);
+  }
+
+  .title .accent {
+    margin-left: 0;
+  }
+
+  .lead {
+    margin: 16px auto 0;
+  }
+
+  .list {
+    margin-top: 32px;
+  }
+
+  .row {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.75rem;
+    grid-template-areas:
+      "no main go"
+      ". kind kind"
+      ". tools tools";
+    gap: 10px 14px;
+    padding: 22px 16px;
+  }
+
+  .no {
+    grid-area: no;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .kind {
+    grid-area: kind;
+    font-size: 10px;
+  }
+
+  .tools {
+    grid-area: tools;
+  }
+
+  .go {
+    grid-area: go;
+    width: 2.75rem;
+  }
+
+  .name {
+    font-size: clamp(26px, 7vw, 44px);
+  }
+
+  .cta {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 40px 16px 0;
+  }
+}

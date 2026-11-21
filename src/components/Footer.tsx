@@ -1,5 +1,16 @@
+import { cacheLife } from "next/cache";
 import { email, navLinks, socials } from "@/data/site";
 import styles from "./Footer.module.css";
+
+/**
+ * The current year. With Cache Components on, reading the date during
+ * prerender is an error, so it is cached (and refreshed daily) instead.
+ */
+async function Year() {
+  "use cache";
+  cacheLife("days");
+  return new Date().getFullYear();
+}
 
 /**
  * Site footer: a short sign-off, nav, profile links and email, then a giant
@@ -72,7 +83,9 @@ export default function Footer() {
       </svg>
 
       <div className={styles.bottom}>
-        <p>© {new Date().getFullYear()} Tangunu Hilary</p>
+        <p>
+          © <Year /> Tangunu Hilary
+        </p>
         <a href="#top" className={styles.link}>
           Back to top <span aria-hidden>↑</span>
         </a>

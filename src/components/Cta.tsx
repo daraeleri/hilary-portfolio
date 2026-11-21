@@ -1,3 +1,4 @@
+import ArrowButton from "./ArrowButton";
 import Reveal from "./Reveal";
 import styles from "./Cta.module.css";
 
@@ -60,13 +61,12 @@ export default function Cta() {
               Let&apos;s ship it <span className={styles.ink}>safely.</span>
             </h2>
             <div className={styles.actions}>
-              <a href="#contact" className={styles.primary}>
+              <ArrowButton href="#contact" variant="light">
                 Start a project
-                <Arrow />
-              </a>
-              <a href="#projects" className={styles.secondary}>
+              </ArrowButton>
+              <ArrowButton href="#projects" variant="outline" arrow={false}>
                 See my work
-              </a>
+              </ArrowButton>
             </div>
           </div>
 

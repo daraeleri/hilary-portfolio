@@ -1,3 +1,4 @@
+import ArrowButton from "./ArrowButton";
 import Reveal from "./Reveal";
 import SectionRule from "./SectionRule";
 import styles from "./Projects.module.css";
@@ -121,10 +122,7 @@ export default function Projects() {
 
         <div className={styles.cta}>
           <p>Have a network to secure or an app to build?</p>
-          <a href="#contact" className={styles.btn}>
-            Let&apos;s talk
-            <Arrow />
-          </a>
+          <ArrowButton href="#contact">Let&apos;s talk</ArrowButton>
         </div>
       </section>
     </Reveal>

@@ -1,0 +1,235 @@
+/*
+ * Arrow button, awwwards-style and then some. Colours per variant; the fill
+ * circle's origin (--x / --y) and the magnetic pull (--tx / --ty) are set from
+ * pointer events in ArrowButton.tsx. Hover effects only on devices that hover.
+ */
+
+.btn {
+  --x: 50%;
+  --y: 50%;
+  --tx: 0px;
+  --ty: 0px;
+  --ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 48px;
+  padding: 0.4rem 0.45rem 0.4rem 1.5rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  /* Outline, not border: it paints above the fill, so no ring shows around it */
+  outline: 1px solid var(--edge, transparent);
+  outline-offset: -1px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  translate: var(--tx) var(--ty);
+  transition:
+    translate 0.5s var(--spring),
+    scale 0.5s var(--spring),
+    color 0.7s var(--ease);
+}
+
+/* A button without an arrow gets even padding */
+.btn:not(:has(.icon)) {
+  padding-right: 1.5rem;
+}
+
+.btn:active {
+  scale: 0.94;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 3px;
+}
+
+/* ---- Variants ---- */
+
+.blue {
+  --bg: var(--blue);
+  --fg: var(--paper);
+  --fill: var(--paper);
+  --fill-fg: var(--ink);
+  --icon-bg: var(--paper);
+  --icon-fg: var(--ink);
+  --icon-bg-hover: var(--ink);
+  --icon-fg-hover: var(--paper);
+  box-shadow: 0 10px 30px -10px var(--blue);
+}
+
+.ghost {
+  --bg: rgba(255, 255, 255, 0.08);
+  --edge: var(--line);
+  --fg: var(--paper);
+  --fill: var(--paper);
+  --fill-fg: var(--ink);
+  --icon-bg: rgba(255, 255, 255, 0.16);
+  --icon-fg: var(--paper);
+  --icon-bg-hover: var(--ink);
+  --icon-fg-hover: var(--paper);
+}
+
+/* For the blue call-to-action band */
+.light {
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fill: var(--ink);
+  --fill-fg: var(--paper);
+  --icon-bg: var(--blue);
+  --icon-fg: var(--paper);
+  --icon-bg-hover: var(--paper);
+  --icon-fg-hover: var(--ink);
+}
+
+.outline {
+  --bg: transparent;
+  --edge: rgba(255, 255, 255, 0.5);
+  --fg: var(--paper);
+  --fill: var(--ink);
+  --fill-fg: var(--paper);
+  --icon-bg: rgba(255, 255, 255, 0.22);
+  --icon-fg: var(--paper);
+  --icon-bg-hover: var(--paper);
+  --icon-fg-hover: var(--ink);
+}
+
+/* ---- Fill circle, blooms from where the cursor entered ---- */
+
+.fill {
+  position: absolute;
+  z-index: -1;
+  left: var(--x);
+  top: var(--y);
+  width: 32rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--fill);
+  translate: -50% -50%;
+  scale: 0;
+  transition: scale 0.7s var(--ease);
+}
+
+/* ---- Label: letters roll up one after another ---- */
+
+.label {
+  display: inline-flex;
+  translate: calc(var(--tx) * 0.5) calc(var(--ty) * 0.5);
+  transition: translate 0.5s var(--spring);
+}
+
+.ch {
+  display: block;
+  height: 1.25em;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+.ch > span {
+  display: block;
+  transition: transform 0.55s var(--ease);
+  transition-delay: calc(var(--i) * 22ms);
+}
+
+/* ---- Arrow: one flies out top-right, a new one slides in from bottom-left ---- */
+
+.icon {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--icon-bg);
+  color: var(--icon-fg);
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    scale 0.5s var(--spring);
+}
+
+.out,
+.in {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: translate 0.55s var(--ease);
+}
+
+.in {
+  translate: -150% 150%;
+}
+
+.out svg,
+.in svg {
+  width: 45%;
+  height: 45%;
+}
+
+/* ---- Hover (and keyboard focus) ---- */
+
+@media (hover: hover) {
+  .btn:hover,
+  .btn:focus-visible {
+    color: var(--fill-fg);
+    scale: 1.05;
+  }
+
+  .btn:hover:active {
+    scale: 0.94;
+  }
+
+  .btn:hover .fill,
+  .btn:focus-visible .fill {
+    scale: 1;
+  }
+
+  .btn:hover .ch > span,
+  .btn:focus-visible .ch > span {
+    transform: translateY(-100%);
+  }
+
+  .btn:hover .icon,
+  .btn:focus-visible .icon {
+    background: var(--icon-bg-hover);
+    color: var(--icon-fg-hover);
+    scale: 1.15;
+  }
+
+  .btn:hover .out,
+  .btn:focus-visible .out {
+    translate: 150% -150%;
+  }
+
+  .btn:hover .in,
+  .btn:focus-visible .in {
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .fill,
+  .label,
+  .ch > span,
+  .icon,
+  .out,
+  .in {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    scale: 1;
+  }
+}

@@ -215,44 +215,6 @@ a.go:focus-visible {
   text-transform: uppercase;
 }
 
-/* Same primary button as the hero */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.75rem 1.25rem 0.75rem 1.5rem;
-  border-radius: 999px;
-  background: var(--blue);
-  box-shadow: 0 10px 30px -10px var(--blue);
-  color: var(--paper);
-  font-size: 14px;
-  font-weight: 600;
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
-}
-
-.btn:hover {
-  background: var(--blue-soft);
-  color: var(--ink);
-}
-
-.btn:focus-visible {
-  outline: 2px solid var(--blue-soft);
-  outline-offset: 2px;
-}
-
-.btn svg {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.25s ease;
-}
-
-.btn:hover svg {
-  transform: translateX(2px);
-}
-
 /* ---- Entrance ---- */
 
 .head,

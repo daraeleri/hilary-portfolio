@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ArrowButton from "./ArrowButton";
 
 const skills = [
   "Networking",
@@ -10,21 +11,6 @@ const skills = [
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-soft";
-
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 16 16" className="size-4" aria-hidden>
-      <path
-        d="M3 8h10M9 4l4 4-4 4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function ShieldIcon() {
   return (
@@ -110,21 +96,10 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex animate-rise flex-wrap items-center justify-center gap-3 [animation-delay:360ms]">
-            <a
-              href="#projects"
-              className={`group inline-flex min-h-11 items-center gap-2 rounded-full bg-blue py-3 pr-5 pl-6 text-sm font-semibold text-paper shadow-[0_10px_30px_-10px_var(--blue)] transition-colors hover:bg-blue-soft hover:text-ink ${focusRing}`}
-            >
-              View my work
-              <span className="transition-transform group-hover:translate-x-0.5">
-                <ArrowIcon />
-              </span>
-            </a>
-            <a
-              href="#contact"
-              className={`inline-flex min-h-11 items-center rounded-full border border-line bg-paper/10 py-3 px-6 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink ${focusRing}`}
-            >
+            <ArrowButton href="#projects">View my work</ArrowButton>
+            <ArrowButton href="#contact" variant="ghost">
               Get in touch
-            </a>
+            </ArrowButton>
           </div>
 
           <p className="mt-5 animate-rise text-xs text-paper/50 [animation-delay:480ms] sm:text-sm">

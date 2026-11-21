@@ -1,0 +1,275 @@
+/*
+ * Contact section: huge email link, what I can help with, profile links and a
+ * footer line. Fluid and full width like the other sections (cqw units).
+ */
+
+.band {
+  container-type: inline-size;
+  overflow: clip;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8cqw 0 2.5cqw;
+}
+
+/* ---- Heading ---- */
+
+.head {
+  margin: 5cqw 5.208cqw 0;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-soft);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 6px rgba(127, 155, 255, 0);
+    opacity: 0.6;
+  }
+}
+
+.title {
+  margin-top: 1.6cqw;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: 9cqw;
+  font-weight: 400;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.title > span {
+  display: block;
+}
+
+.title .accent {
+  color: var(--blue);
+}
+
+/* ---- Email: the main action ---- */
+
+.mail {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+  margin-top: 4cqw;
+  padding: 2.4cqw 5.208cqw;
+  border-block: 1px solid var(--line);
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: max(28px, 5.2cqw);
+  line-height: 1;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+/* Blue fill sweeps up on hover, same motion as the project rows */
+.mail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.mailArrow {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: max(2.75rem, 5cqw);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.mailArrow svg {
+  width: 40%;
+  height: 40%;
+}
+
+.mail:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: -4px;
+}
+
+.mail:focus-visible::before {
+  transform: scaleY(1);
+}
+
+@media (hover: hover) {
+  .mail:hover::before {
+    transform: scaleY(1);
+  }
+
+  .mail:hover .mailArrow {
+    background: var(--paper);
+    color: var(--ink);
+    transform: rotate(-45deg);
+  }
+}
+
+/* ---- Columns ---- */
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2cqw;
+  margin: 4cqw 5.208cqw 0;
+}
+
+.colTitle {
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.plain {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: max(22px, 2.2cqw);
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+/* Underline that draws in on hover */
+.link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+  transition:
+    background-size 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.25s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 2px;
+  color: var(--blue-soft);
+  outline: none;
+}
+
+/* ---- Footer ---- */
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 7cqw 5.208cqw 0;
+  padding-top: 1.6cqw;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---- Entrance ---- */
+
+.head,
+.mail,
+.cols {
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.mail {
+  transition-delay: 0.1s;
+}
+
+.cols {
+  transition-delay: 0.2s;
+}
+
+.band[data-inview="false"] .head,
+.band[data-inview="false"] .mail,
+.band[data-inview="false"] .cols {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+
+  .head,
+  .mail,
+  .cols,
+  .mail::before,
+  .mailArrow,
+  .link {
+    transition: none;
+  }
+}
+
+/* ---- Tablets and phones ---- */
+
+@media (max-width: 1023px) {
+  .band {
+    padding: 80px 0 28px;
+  }
+
+  .head {
+    margin: 48px 24px 0;
+    text-align: center;
+  }
+
+  .title {
+    font-size: clamp(48px, 14cqw, 96px);
+  }
+
+  .mail {
+    margin-top: 40px;
+    padding: 28px 16px;
+    font-size: clamp(24px, 7.2vw, 56px);
+  }
+
+  .mailArrow {
+    width: 2.75rem;
+  }
+
+  .cols {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin: 40px 16px 0;
+  }
+
+  .plain {
+    font-size: 24px;
+  }
+
+  .foot {
+    margin: 56px 16px 0;
+    padding-top: 16px;
+  }
+}

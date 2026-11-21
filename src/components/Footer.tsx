@@ -1,5 +1,6 @@
 import { cacheLife } from "next/cache";
 import { email, navLinks, socials } from "@/data/site";
+import Reveal from "./Reveal";
 import styles from "./Footer.module.css";
 
 /**
@@ -14,7 +15,8 @@ async function Year() {
 
 /**
  * Site footer: a short sign-off, nav, profile links and email, then a giant
- * stretched wordmark and the legal line. Server component, CSS only.
+ * stretched wordmark and the legal line. The wordmark animation is CSS driven
+ * by the shared Reveal wrapper.
  */
 export default function Footer() {
   return (
@@ -64,23 +66,31 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Stretched to the full width with textLength, so it fits at any size */}
-      <svg
-        viewBox="0 0 1000 250"
-        className={styles.mark}
-        role="img"
-        aria-label="Hilary"
-      >
-        <text
-          x="0"
-          y="240"
-          textLength="1000"
-          lengthAdjust="spacingAndGlyphs"
-          className={styles.markText}
+      {/*
+        Stretched to the full width with textLength, so it fits at any size.
+        Once it scrolls into view the letters rise from the bottom edge while
+        fading up to full white, then the asterisk fades in.
+      */}
+      <Reveal className={styles.markWrap}>
+        <svg
+          viewBox="0 0 1000 250"
+          className={styles.mark}
+          role="img"
+          aria-label="Hilary"
         >
-          HILARY<tspan className={styles.markStar}>*</tspan>
-        </text>
-      </svg>
+          <g className={styles.markGroup}>
+            <text
+              x="0"
+              y="240"
+              textLength="1000"
+              lengthAdjust="spacingAndGlyphs"
+              className={styles.markText}
+            >
+              HILARY<tspan className={styles.markStar}>*</tspan>
+            </text>
+          </g>
+        </svg>
+      </Reveal>
 
       <div className={styles.bottom}>
         <p>

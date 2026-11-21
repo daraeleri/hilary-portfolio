@@ -1,0 +1,294 @@
+/*
+ * Call to action: a full-bleed blue band that breaks up the dark sections.
+ * Outlined scrolling line on top, big headline and buttons, and a rotating
+ * text badge. Fluid and full width like the other sections (cqw units).
+ */
+
+.band {
+  position: relative;
+  container-type: inline-size;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--blue);
+  color: var(--paper);
+  padding: 4cqw 0 7cqw;
+}
+
+/* Faint dot grid, fading towards the edges */
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.35;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+}
+
+/* ---- Outlined marquee ---- */
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  flex-shrink: 0;
+  animation: cta-marquee 40s linear infinite;
+}
+
+.unit {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.unit li {
+  display: flex;
+  align-items: center;
+  padding-right: 3cqw;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: 9cqw;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--paper);
+}
+
+.star {
+  margin-left: 3cqw;
+  color: var(--ink);
+  -webkit-text-stroke: 0;
+}
+
+@keyframes cta-marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---- Body ---- */
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4cqw;
+  margin: 4cqw 5.208cqw 0;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.kicker {
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.title {
+  margin-top: 1.4cqw;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: 7.4cqw;
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.ink {
+  color: var(--ink);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.6cqw;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.primary {
+  padding-right: 1.25rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.primary:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.secondary {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.secondary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.badge:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.primary svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.primary:hover svg {
+  transform: translateX(2px);
+}
+
+/* ---- Rotating badge ---- */
+
+.badge {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: max(9rem, 15cqw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: cta-spin 18s linear infinite;
+}
+
+.ringText {
+  font-family: var(--font-mono), monospace;
+  font-size: 8.4px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  fill: var(--paper);
+}
+
+.core {
+  display: grid;
+  place-items: center;
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.core svg {
+  width: 44%;
+  height: 44%;
+}
+
+@keyframes cta-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (hover: hover) {
+  .badge:hover .core {
+    background: var(--paper);
+    color: var(--ink);
+    transform: rotate(-45deg) scale(1.08);
+  }
+}
+
+/* ---- Entrance ---- */
+
+.marquee,
+.body {
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.band[data-inview="false"] .marquee,
+.band[data-inview="false"] .body {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .ring {
+    animation: none;
+  }
+
+  .marquee,
+  .body,
+  .core {
+    transition: none;
+  }
+}
+
+/* ---- Tablets and phones ---- */
+
+@media (max-width: 1023px) {
+  .band {
+    padding: 28px 0 64px;
+  }
+
+  .unit li {
+    padding-right: 24px;
+    font-size: 64px;
+  }
+
+  .star {
+    margin-left: 24px;
+  }
+
+  .body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+    margin: 36px 16px 0;
+  }
+
+  .title {
+    font-size: clamp(44px, 13cqw, 96px);
+  }
+
+  .actions {
+    margin-top: 24px;
+  }
+
+  .badge {
+    width: 9rem;
+    align-self: flex-end;
+  }
+}

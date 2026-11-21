@@ -1,15 +1,7 @@
 import Reveal from "./Reveal";
 import SectionRule from "./SectionRule";
+import { email, socials } from "@/data/site";
 import styles from "./Contact.module.css";
-
-// TODO: placeholders. Replace with Hilary's real email and profile links
-// before launch. The social hrefs are site roots, not real profiles.
-const email = "hello@example.com";
-
-const socials = [
-  { label: "GitHub", href: "https://github.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
-];
 
 const services = [
   "Networking",
@@ -35,8 +27,8 @@ function Arrow() {
 }
 
 /**
- * Closing section: a huge email link as the main action, a short list of what
- * Hilary can help with, profile links, and the footer line. Pure CSS motion.
+ * Contact section: a huge email link as the main action, a short list of what
+ * Hilary can help with, and profile links. Pure CSS motion.
  */
 export default function Contact() {
   return (
@@ -98,13 +90,6 @@ export default function Contact() {
             </ul>
           </div>
         </div>
-
-        <footer className={styles.foot}>
-          <p>© {new Date().getFullYear()} Tangunu Hilary</p>
-          <a href="#top" className={styles.link}>
-            Back to top <span aria-hidden>↑</span>
-          </a>
-        </footer>
       </section>
     </Reveal>
   );

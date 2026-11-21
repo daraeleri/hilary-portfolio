@@ -1,0 +1,139 @@
+/*
+ * Site footer: sign-off, nav and links in three columns, a giant wordmark
+ * stretched to the full width, and the legal line. Fluid and full width like
+ * the sections above (cqw units against the footer).
+ */
+
+.footer {
+  container-type: inline-size;
+  overflow: clip;
+  background: var(--ink);
+  color: var(--paper);
+  border-top: 1px solid var(--line);
+  padding: 5cqw 5.208cqw 2cqw;
+}
+
+/* ---- Columns ---- */
+
+.top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 3cqw;
+}
+
+.tagline {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: max(26px, 2.8cqw);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.tagline span {
+  color: var(--blue-soft);
+}
+
+.colTitle {
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.col ul {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: max(15px, 1.15cqw);
+  overflow-wrap: anywhere;
+}
+
+/* Underline that draws in on hover, same as Contact */
+.link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+  transition:
+    background-size 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.25s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 2px;
+  color: var(--blue-soft);
+  outline: none;
+}
+
+/* ---- Wordmark ---- */
+
+.mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 5cqw;
+  overflow: visible;
+}
+
+.markText {
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: 290px;
+  fill: var(--paper);
+}
+
+.markStar {
+  fill: var(--blue);
+}
+
+/* ---- Legal line ---- */
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.4cqw;
+  padding-top: 1.6cqw;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono), monospace;
+  font-size: max(10px, 0.78cqw);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}
+
+/* ---- Tablets and phones ---- */
+
+@media (max-width: 1023px) {
+  .footer {
+    padding: 48px 16px 20px;
+  }
+
+  .top {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 24px;
+  }
+
+  .tagline {
+    grid-column: 1 / -1;
+    font-size: 32px;
+  }
+
+  .mark {
+    margin-top: 48px;
+  }
+
+  .bottom {
+    margin-top: 24px;
+    padding-top: 16px;
+    font-size: 10px;
+  }
+}
